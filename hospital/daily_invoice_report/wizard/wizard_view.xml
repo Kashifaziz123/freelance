@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model='ir.ui.view' id='invoice_wizard_form'>
+             <field name="name">wizard.sale.history.form</field>
+            <field name="model">wizard.invoice.history</field>
+            <field name="arch" type="xml">
+                <form string="Wizard">
+                        <group string="Daily Invoice Report">
+                            <field name="date_from" string="Date from"/>
+                            <field name="date_to" string="Date To"/>
+                            <field name="shift" string="Shift"/>
+                        </group>
+                        <group>
+                            <!-- <field name="ref_by_ids"/> -->
+                            <field name="category"/>
+                            <field name="user_id"/>
+                        </group>
+                    <footer>
+                        <button name="print_report" string="Invoice Print"  type="object" class="btn-primary"/>
+
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record model='ir.actions.act_window' id='invoice_wizard_act'>
+            <field name="name">Daily Invoice Report</field>
+            <field name="res_model">wizard.invoice.history</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="invoice_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <!-- <menuitem name="Current stock in Excel" parent="stock.menu_warehouse_report" id="export_excel" action="wizard_act" sequence="3"/> -->
+        <menuitem name="Invoice Report"  id="print_report" action="invoice_wizard_act" parent="oehealth.oeh_medical_menu"/>
+    </data>
+</odoo>

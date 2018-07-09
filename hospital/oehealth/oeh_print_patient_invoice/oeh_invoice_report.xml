@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report
+            string="Patient Invoice"
+            id="action_report_oeh_invoice"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            name="oehealth.report_oeh_invoice"
+            file="oehealth.report_oeh_invoice"
+        />
+
+
+    </data>
+</openerp>

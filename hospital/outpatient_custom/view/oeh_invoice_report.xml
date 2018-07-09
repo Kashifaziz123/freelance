@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report
+            string="Outpatient Invoice"
+            id="action_report_oeh_invoice_custom"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            name="outpatient_custom.report_oeh_invoice_custom"
+            file="outpatient_custom.report_oeh_invoice_custom"
+        />
+		
+		<report
+            string="Corporate Outpatient Invoice"
+            id="action_report_oeh_invoice_custom_corporate"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            name="outpatient_custom.report_oeh_invoice_custom_corporate"
+            file="outpatient_custom.report_oeh_invoice_custom_corporate"
+        />
+		
+		<report
+            string="MRI-CT Request Form"
+            id="action_report_oeh_invoice_custom_mri"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            name="outpatient_custom.report_oeh_invoice_custom_mri"
+            file="outpatient_custom.report_oeh_invoice_custom_mri"
+        />
+
+
+    </data>
+</openerp>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- <report
+        id="stock_move_report"
+        model="stock.picking"
+        string="Valued Delivery Note"
+        report_type="qweb-pdf"
+        name="abbex_valued_stock_move.stock_move_report_temp"
+        file="abbex_valued_stock_move.stock_move_report_temp"
+    /> -->
+    
+     <report
+            string="Daily Invoice"
+            id="daily_invoice"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            name="daily_invoice_report.report_dailyinvoice_report"
+            file="daily_invoice_report.report_dailyinvoice_report"
+            menu= "False"
+        />
+
+</odoo>

@@ -1,0 +1,8 @@
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/account_invoice_indent/static/src/js/patient_template.js"/>
+<!--             <script type="text/javascript" src="/belwatech_pos/static/src/js/belwatech_pos_model.js"></script> -->
+        </xpath>
+    </template>
+</odoo>

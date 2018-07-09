@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+	<!--    <record id="view_outpatient_form_wizard" model="ir.ui.view">
+		       <field name="name">account.invoice</field>
+		       <field name="model">account.invoice</field>
+		       <field name="inherit_id" ref="account.invoice_form"/>	
+		       <field name="arch" type="xml">
+	       		<xpath expr="//field[@name='number']" position="after">
+	       			 <div class="oe_button_box" name="button_box">
+	       		   <button class="oe_stat_button" name="%(action_wizard_outpatient)d"
+		                                	 string="Delegate" type="action"
+		                                     icon="fa-bars"/>
+	                 </div>
+	       		</xpath>
+	       </field>
+	      </record>
+         -->   
+		    <record id="wizard_view_outpatient" model="ir.ui.view">
+		        <field name="name">outpatient</field>
+		        <field name="model">outpatient.wizard</field>
+		        <field name="arch" type="xml">
+		        	<form string="outpatient">
+			                 <group style="width:50%">
+			                 	<field name="partner_id"></field>
+		                 	</group>
+		                 </form>
+		                </field>
+		               </record>
+       
+    <record id="action_wizard_outpatient" model="ir.actions.act_window">
+        <field name="name">Outpatient Wizard</field>
+        <field name="res_model">outpatient.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="search_view_id" ref="wizard_view_outpatient"/>
+    </record>
+    </data>
+    </odoo>

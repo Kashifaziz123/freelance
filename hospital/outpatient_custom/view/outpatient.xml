@@ -1,0 +1,152 @@
+<?xml version="1.0" ?>
+<odoo>
+      <data>
+      
+      
+            <record id="account_invoice_form_extended_custom" model="ir.ui.view">
+                <field name="name">account.invoice.form.extended</field>
+                <field name="model">account.invoice</field>
+                <field name="inherit_id" ref="account_invoice_indent.account_invoice_form_extended"/>
+                <field name="arch" type="xml">
+                        <field name="cust_indent_no" position="replace">
+                            <field name="cust_indent_no" attrs="{'invisible':[('out_patient','=',True)],'required':[('out_patient','=',False)]}"/>
+                        </field>
+                         <field name="inpatient_id" position="replace">
+                            <field name="inpatient_id" domain="[('patient', '=', patient)]"/>
+                                <!-- <attribute name="domain">[('patient','=','Fae')]</attribute> -->
+                         </field>
+                </field>
+            </record>
+      
+         <record id="outpatient_invoice_form" model="ir.ui.view">
+            <field name="name">account.out.patient.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="priority" eval="8" />
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+            
+                <field name="partner_id" position="before">
+                
+                    <field name="out_patient" invisible="True"/>
+                </field>
+                
+             
+               
+                
+                 <xpath expr="//form/sheet/group/group" position="attributes">
+                    <attribute name="string">Panel Information</attribute>
+                </xpath>
+                
+                    <field name="partner_id" position="after">
+                    
+                    <field name="approved_by"/>
+                    <field name="internal_no"/>
+                    <field name="date_inter_appr"/>
+                    <field name="panel_ref_no"/>
+                    <!-- <field name="approved_by" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                    <field name="internal_no" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                    <field name="date_inter_appr" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                    <field name="panel_ref_no" attrs="{'invisible':[('out_patient','=',False)]}"/> -->
+                    <!-- </field> -->
+                       
+                </field>
+                 <xpath expr="//form/sheet/group/group[2]" position="attributes">
+                    <attribute name="string">Invoice Attributes</attribute>
+                </xpath>
+                
+                
+                <field name="sent" position="before">
+                
+                    <group>
+                            <group string="Patient Information" attrs="{'invisible':[('out_patient','=',False)]}">
+                                <field name="op_id" attrs="{'invisible':[('out_patient','=',False)]}" invisible="1"/>
+                                <field name="op_name" attrs="{'invisible':[('out_patient','=',False)],'required':[('out_patient','=',True)]}" style="text-transform: uppercase;"/>
+                                <field name="o_age" attrs="{'invisible':[('out_patient','=',False)]}" style="text-transform: uppercase;"/>
+   		 					    <field name="o_cnic" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                                <field name="relation_name" attrs="{'invisible':[('out_patient','=',False)]}" style="text-transform: uppercase;"/>
+    
+                                <field name="realtionship" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                                <field name="o_sex" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                                <field name="o_mobile" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                                <field name="o_patient_address" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                            </group>
+                    
+                            <group string="Physician's Reference" attrs="{'invisible':[('out_patient','=',False)]}">
+                                 <field name="ref_by"/>
+                                <field name="ref_no"/>
+                                <field name="remark"/>
+                                <field name="date_ref_by"/>
+                                <field name="reporting_department"/>
+
+                                <field name="indent_no"/>
+                                
+                           
+                            <!-- 
+                                <field name="ref_by" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                                <field name="ref_no" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                                <field name="remark" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                                <field name="date_ref_by" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                                <field name="reporting_department" attrs="{'invisible':[('out_patient','=',False)]}"/>
+
+                                <field name="indent_no" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                                 -->
+                              
+                            </group>
+                    
+                    </group>
+                </field>
+                
+               
+                
+                <!-- <xpath expr="/form/field[@name='name']" position="attributes">
+                    <field name="inv_remark" attrs="{'invisible':[('out_patient','=',False)]}"/>
+                </xpath> -->
+
+                
+            </field>
+        </record>
+
+        <record id="action_invoice_outpatient" model="ir.actions.act_window">
+            <field name="name">Outpatient Managment</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('out_patient','=',True)]</field>
+            <field name="context">{'type':'out_invoice', 'journal_type': 'sale','default_out_patient':True}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a customer invoice.
+              </p><p>
+                Odoo's electronic invoicing allows to ease and fasten the
+                collection of customer payments. Your customer receives the
+                invoice by email and he can pay online and/or import it
+                in his own system.
+              </p><p>
+                The discussions with your customer are automatically displayed at
+                the bottom of each invoice.
+              </p>
+            </field>
+        </record>
+        
+        <record id="action_invoice_tree1_view1" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="account.invoice_tree"/>
+            <field name="act_window_id" ref="action_invoice_outpatient"/>
+        </record>
+
+        <record id="action_invoice_tree1_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_outpatient"/>
+        </record>
+
+      
+      
+    <!-- parent="oehealth.oeh_medical_patients_menu" -->
+        <menuitem action="action_invoice_outpatient" id="oeh_medical_outpatient" parent="oehealth.oeh_medical_menu" sequence="1"/>
+       </data>
+</odoo>

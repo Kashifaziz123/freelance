@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2015-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+
+<odoo>
+	<data>
+
+		<record id="inherit_sale_order_form_view" model="ir.ui.view">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.sale_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//group[@class='oe_subtotal_footer oe_right']" position="replace">
+					<group>
+						<group>
+							<field  name="global_discount_type"
+									groups="discount_sale_order.group_discount_sale_line"
+									class="oe_inline"
+									attrs="{'required' :[('global_order_discount', '>', 0.0)],
+									'readonly' :[('state', '=', 'done')]}"/>
+							<field  name="global_order_discount"
+									groups="discount_sale_order.group_discount_sale_line"
+									class="oe_inline"
+									attrs="{'readonly' :[('state', '=', 'done')]}"/>
+						</group>
+						<group class="oe_subtotal_footer oe_right">
+							<field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+							<field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+							<field  name="total_discount"
+									widget='monetary' options="{'currency_field': 'currency_id'}"
+									groups="discount_sale_order.group_order_global_discount,discount_sale_order.group_discount_sale_line" />
+							<div class="oe_subtotal_footer_separator oe_inline">
+								<label for="amount_total"/>
+							</div>
+							<field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+						</group>
+					</group>
+				</xpath>
+				<xpath expr="//field[@name='order_line']//form//field[@name='price_unit']" position="after">
+					<field  name="discount"
+							groups="discount_sale_order.group_discount_sale_line"
+							class="oe_inline"/>
+					<field  name="discount_type"
+							groups="discount_sale_order.group_discount_sale_line"
+							class="oe_inline"/>
+				</xpath>
+				<xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">
+					<field  name="discount_type"
+							groups="discount_sale_order.group_discount_sale_line"
+							attrs="{'required' :[('discount', '>', 0.0)]}"/>
+					<field  name="discount"
+							groups="discount_sale_order.group_discount_sale_line"/>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

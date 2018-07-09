@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+<odoo>
+<template id="report_dailyinvoice_report">
+    <t t-call="report.html_container">
+        <t t-set="data_report_margin_top" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+        <t t-foreach="data" t-as="o">
+            <!-- <t t-call="report.internal_layout"> -->
+            <t t-call="daily_invoice_report.internal_layout_custom">
+                <div class="page">
+                    <h2>Daily report</h2>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <strong t-esc="o"/>
+                        </div>
+                        <div class="col-xs-2">
+                            <p>
+                                 Date To :<strong t-esc="date_to"/>
+                            </p>
+                        </div>
+                        <div class="col-xs-2">
+                            <p>
+                                
+                                 Date From:<strong t-esc="date_from"/>
+                            </p>
+                        </div>
+                        <div class="col-xs-2">
+                            <p>
+                                
+                                 SHIFT:<strong t-esc="shift"/>
+                            </p>
+                        </div>
+                        
+                        
+                    </div>
+                     <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Department</th>
+                                <th>Invoice Number</th>
+                                <th>Date</th>
+                                <th>Patient Name</th>
+                                <th>Doctor Name</th>
+                                <th>Product</th>
+                                <!-- <th>Total Amount</th> -->
+                                <th>Billed Amount</th>
+                                <th>Discount</th>
+                                <!-- <th>Due Amount</th> -->
+                                <th>paid Amount</th>
+                                <th>Pending Amount</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <!-- <t t-esc="data" /> -->
+                            <!-- <tr>
+                                <td colspan="4">
+                                    <strong t-esc="o"/>
+                                </td>
+                            </tr> -->
+                            <t t-set="user_dep_totalsum" t-value="0"/>
+                            <t t-set="user_dep_totaldue" t-value="0"/>
+                            <t t-set="user_dep_discount" t-value="0"/>
+                             <t t-set="user_dep_totalpaidsum" t-value="0"/>
+                            <t t-foreach="data[o]" t-as="property">
+    
+                               
+                                <t t-foreach="property" t-as="dep_name">
+                                    <tr>
+                                        <td colspan="4">
+                                            <strong t-esc="dep_name"/>
+                                        </td>
+                                    </tr>
+                                    <t t-set="dep_totalsum" t-value="0"/>
+                                    <t t-set="dep_totaldue" t-value="0"/>
+                                    <t t-set="dep_discount" t-value="0"/>
+                                    <t t-set="dep_paid_amount" t-value="0"/>
+                                    
+                
+                                    <t t-foreach="property[dep_name]" t-as="department">
+                                        <t t-set="dep_totalsum" t-value="dep_totalsum + department['total_amount'] + department['discount_amount']" />
+                                        <t t-set="dep_totaldue" t-value="dep_totaldue + department['due_amount']" />
+                                        <t t-set="dep_discount" t-value="dep_discount + department['discount_amount']" />
+                                        <t t-set="dep_paid_amount" t-value="dep_paid_amount + department['total_amount'] - department['due_amount']"/>
+                                        
+                                        
+                                        <t t-set="user_dep_totalsum" t-value="user_dep_totalsum + department['total_amount'] + department['discount_amount']" />
+                                        <t t-set="user_dep_totaldue" t-value="user_dep_totaldue + department['due_amount']" />
+                                        <t t-set="user_dep_discount" t-value="user_dep_discount + department['discount_amount']" />
+                                        <t t-set="user_dep_totalpaidsum" t-value="user_dep_totalpaidsum + department['total_amount'] - department['due_amount']"/>
+                                    
+
+                                    <tr>
+                                        <td></td>
+                                        
+                                        <td>
+                                            <strong t-esc="department['inv']"/>
+                                        </td>
+                                        <td>
+                                            <strong t-esc="department['date']"/>
+                                        </td>
+                                        <td>
+                                            <t t-if="department['pat_name']">
+                                                <span t-esc="department['pat_name']"/>
+                                            </t>
+                                            <t t-if="department['inpat_name']">   
+                                                <span t-esc="department['inpat_name']"/>
+                                            </t>
+                                            <!-- <strong t-esc="department['pat_name']"/> -->
+                                        </td>
+                                        
+                                        <td>
+                                            <strong t-esc="department['referral_dr']"/>
+                                        </td>
+                                        
+                                         <td>
+                                            <strong t-esc="department['product_id']"/>
+                                        </td>
+                                        
+                                        <td>
+                                        <!-- billed amount -->
+                                            <strong t-esc="department['total_amount'] + department['discount_amount']"/>
+                                        </td>
+                                        <td>
+                                        <!-- Discount Amount -->
+                                            <strong t-esc="department['discount_amount']"/>
+                                        </td>
+                                        <td>
+                                        <!-- paid Amount -->
+                                            <strong t-esc="department['total_amount'] - department['due_amount']"/>
+                                        </td>
+                                        <td>
+                                        <!-- due amount -->
+                                            <strong t-esc="department['due_amount']"/>
+                                        </td>
+                                        <!-- <td>
+                                            <strong t-esc="department['inv']"/>
+                                        </td> -->
+                                        <!-- <td>
+                                            <strong t-esc="department['date']"/>
+                                        </td> -->
+                                    </tr>
+                                    </t>
+                                    
+<!-- 
+                                    <t t-foreach="doc.book_id" t-as="l"> -->
+                                    
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Department Total</td>
+                                        
+                                        <td>
+                    
+                                            Rs:<strong  t-esc="dep_totalsum"/>
+                                        </td>
+                                        <td>
+                                            Rs:<strong  t-esc="dep_discount"/>
+                                                
+                                        </td>
+                                        <td>
+                                            Rs:<strong  t-esc="dep_paid_amount"/>
+                                        </td>
+                                        <td>
+                                            
+                                            Rs:<strong t-esc="dep_totaldue"/>
+                                        </td>
+                                    </tr>
+                                    
+
+                                    
+                                    <!-- </t> -->
+                                </t>
+                                                                                             
+                            </t>
+                                                        <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Grand Total</td>
+                                        
+                                        <td>
+                    
+                                            Rs:<strong t-esc="user_dep_totalsum"/>
+                                        </td>
+                                        <td>
+                                            Rs:<strong t-esc="user_dep_discount"/>
+                                        </td>
+                                        <td>
+                                            Rs:<strong  t-esc="user_dep_totalpaidsum"/>
+                                        </td>
+                                        <td>
+                                            
+                                            <strong t-esc="user_dep_totaldue"/>
+                                        </td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                    
+                <!-- <div class="row">
+                        <div class="col-xs-6">
+                            
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Grand Total:</strong>
+                            
+                        </div>
+                        
+                        <div class="col-xs-1">
+                            <p>
+                                Rs:<strong t-esc="user_dep_totalsum"/>
+                            </p>
+                        </div>
+                        <div class="col-xs-1">
+                            <p>
+                                Rs:<strong t-esc="user_dep_totaldue"/>
+                            </p>
+                        </div>
+                    </div> -->
+                    
+                </div>
+                
+            
+            </t>
+        </t>
+    </t>
+</template>
+
+<template id="internal_layout_custom">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <div class="header">
+        <div class="row">
+            <div class="col-xs-2">
+                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+            </div>
+            <!-- <div class="col-xs-7 col-xs-offset-2 text-center"> -->
+            <div class="col-xs-8">
+                <span t-esc="company.name"/>
+            </div>
+            <!-- <div class="col-xs-2 col-xs-offset-3 text-right"> -->
+            <div class="col-xs-2 text-right">
+                <ul class="list-inline">
+                    <li><span class="page"/></li>
+                    <li>/</li>
+                    <li><span class="topage"/></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <t t-raw="0" />
+</template>
+   
+    <template id="report_invoiceable_custom">
+        <t t-foreach="data" t-as="o">
+            <t t-call="dalilyinvoice_report.report_dailyinvoice_report" t-lang="o.partner_id.lang"/>
+        </t>
+    </template>
+</odoo>
