@@ -1,2 +1,0 @@
-import stock_picking
-import wizard

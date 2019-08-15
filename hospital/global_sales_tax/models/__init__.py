@@ -1,3 +1,0 @@
-import account_invoice_custom
-import res_company_custom
-import res_partner_custom

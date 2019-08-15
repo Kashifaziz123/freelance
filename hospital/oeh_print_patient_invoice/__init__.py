@@ -1,1 +1,0 @@
-import oeh_print_patient_invoice_custom
