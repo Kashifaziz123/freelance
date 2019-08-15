@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_fleet_gps_engine_hours_form" model="ir.ui.view">
+        <field name="name">high.view.fleet.gps.engine.hours.form</field>
+        <field name="model">fleet.vehicle.engine</field>
+        <field name="arch" type="xml">
+           <form string="Engine Hours">
+                    <sheet>
+                        <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="vehicle_id"/>
+                        </group>
+                        <group>
+                            <field name="engine_hours"/>
+                            <field name="unit"/>
+                        </group>
+                    </group>
+                    </sheet>
+                </form>
+        </field>
+    </record>
+
+    <record id="view_fleet_gps_engine_hours" model="ir.ui.view">
+                <field name="name">view.fleet.gps.engine.hours</field>
+                <field name="model">fleet.vehicle.engine</field>
+                   <field name="arch" type="xml">
+                   <tree string="Engine Hours" editable="top">
+                    <field name="date"/>
+                    <field name="vehicle_id"/>
+                    <field name="engine_hours"/>
+                    <field name="unit"/>
+                </tree>
+            </field>
+     </record>
+
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="map_action_window" model="ir.actions.client">
+            <field name="name">MAP</field>
+            <field name="tag">mapall</field>
+     </record>
+     <record id="view_map_form" model="ir.ui.view">
+            <field name="name">map.form</field>
+            <field name="model">map.transient</field>
+            <field name="arch" type="xml">
+                <form string="MAP" create="false">
+                     <field name="imei" widget="map"></field>
+                </form>
+            </field>
+         </record>
+
+  <record id="action_map_window" model="ir.actions.act_window">
+            <field name="name">map</field>
+            <field name="res_model">map.transient</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'search_default_vehid': active_id, 'default_veh_id':active_id}</field>
+        </record>
+
+    <record id='fleet_vehicle_view_form_ext_employee' model='ir.ui.view'>
+        <field name="name">fleet.vehicle.form.ext.employee</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" name="total_engine_hours_afqy" type="object" icon="fa-files-o">
+                    <field string="Engine Hours" name="engine_hour_counts" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" string="Map" name="%(action_map_window)d" type="action" icon="fa-map-marker">
+                </button>
+            </xpath>
+            <field name="tag_ids" position="after">
+                <br/>
+                <label for="imei" class="oe_edit_only"/>
+                <field name="imei"/><br/>
+                <label for="is_tracking" class="oe_edit_only"/>
+                <field name="is_tracking"/>
+             </field>
+             <field name="car_value" position="before">
+                <field name="total_engine_hours"/>
+             </field>
+        </field>
+    </record>
+
+    
+    <!-- Map view for fleet -->
+    <!--<record id="view_fleet_vehicle_map" model="ir.ui.view">-->
+        <!--<field name="name">view.fleet.vehicle.map</field>-->
+        <!--<field name="model">fleet.vehicle</field>-->
+        <!--<field name="arch" type="xml">-->
+            <!--<map string="Map" lat="vehicle_latitude" lng="vehcile_longitude" colors="red:vehcile_speed==0;green:vehcile_speed&gt;0;">-->
+                <!--<field name="vehicle_latitude"/>-->
+                <!--<field name="vehcile_longitude"/>-->
+                <!--<field name="vehcile_speed"/>-->
+                <!--<templates>-->
+                    <!--<t t-name="kanban-box">-->
+                        <!--<div class="oe_kanban_global_click">-->
+                            <!--<div class="oe_kanban_details">-->
+                                <!--<strong class="oe_partner_heading">-->
+                                    <!--<field name="display_name"/>-->
+                                <!--</strong><br/>-->
+                                <!--Speed: <field name="vehcile_speed"/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</t>-->
+                <!--</templates>-->
+            <!--</map>-->
+        <!--</field>-->
+    <!--</record>-->
+    <!---->
+    <record id="fleet.fleet_vehicle_action" model="ir.actions.act_window">
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+</odoo>

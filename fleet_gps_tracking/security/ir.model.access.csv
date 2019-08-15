@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fleet_vehicle.engine,fleet.vehicle.engine,model_fleet_vehicle_engine,,1,1,1,1
+access_map_transient,access_map_transient,model_map_transient,,1,1,1,1

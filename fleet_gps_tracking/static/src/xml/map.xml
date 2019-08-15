@@ -1,0 +1,16 @@
+<templates >
+    <t t-name="FieldMap">
+        <div id="map" style="width:100%;height:800px;"></div>
+    </t>
+      <t t-name="mapall">
+           <iframe src="https://afaqy.in/tracking.php" style="width:100%;height:800px;"></iframe>
+    </t>
+
+    <t t-extend="KanbanView.buttons">
+                 <t t-jquery="button.o-kanban-button-new" t-operation="after">
+                  <button t-if="widget.model == 'fleet.vehicle'" class="fa fa-map-marker btn btn-icon kanbanmap" type="button">MAP</button>
+                   </t>
+          </t>
+</templates>
+
+
